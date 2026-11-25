@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DiskQuilt</string>
+
+    <!-- Home -->
+    <string name="home_tagline">Temukan apa yang menghabiskan penyimpanan Anda. Pindai volume, lalu telusuri treemap-nya.</string>
+    <string name="volumes">Volume</string>
+    <string name="volumes_empty_granted">Tidak ada volume yang bisa dibaca.</string>
+    <string name="volumes_empty_denied">Beri akses untuk menampilkan volume Anda.</string>
+    <string name="volume_usage">%1$s terpakai dari %2$s · %3$s kosong</string>
+    <string name="recent_title">Pindaian terakhir</string>
+    <string name="recent_detail">%1$s · %2$s</string>
+    <string name="recent_open">Pindai lagi</string>
+    <string name="recent_forget">Lupakan</string>
+    <string name="time_just_now">baru saja</string>
+    <string name="time_minutes_ago">%1$d mnt lalu</string>
+    <string name="time_hours_ago">%1$d jam lalu</string>
+    <string name="time_days_ago">%1$d hr lalu</string>
+    <string name="time_months_ago">%1$d bln lalu</string>
+    <string name="about">Tentang</string>
+    <string name="about_title">Tentang DiskQuilt</string>
+    <string name="about_body">DiskQuilt membaca penyimpanan Anda hanya di perangkat ini. Tanpa akun, tanpa unggahan, tanpa analitik.\n\nAplikasi ini memerlukan “akses semua file” untuk mendata setiap file yang bisa dibaca. Android tetap menyembunyikan Android/data, Android/obb, dan data privat aplikasi lain kecuali ponsel di-root; layar hasil menyebutkan berapa banyak yang tidak terjangkau.\n\nPenghapusan bersifat permanen: tanpa tempat sampah, tanpa pembatalan.</string>
+    <string name="about_version">Versi %1$s</string>
+    <string name="open_failed">Tidak bisa membuka file ini</string>
+    <string name="share_failed">Tidak bisa membagikan file ini</string>
+    <string name="empty_no_matches_body">Coba nama yang lebih pendek, atau bersihkan pencarian.</string>
+    <string name="scan">Pindai</string>
+    <string name="scan_specific_folder">Atau pindai folder tertentu</string>
+    <string name="folder_path_hint">/storage/emulated/0/Download</string>
+
+    <!-- Permission explainer -->
+    <string name="permission_title">Satu izin, tiga langkah</string>
+    <string name="permission_why">Android hanya mengizinkan penganalisis penyimpanan melihat semua file dengan \"akses semua file\". Izin foto/video saja tidak cukup — hasil pindai akan hampir kosong.</string>
+    <string name="permission_step1">Ketuk tombol di bawah untuk membuka pengaturan sistem.</string>
+    <string name="permission_step2">Aktifkan \"Izinkan akses untuk mengelola semua file\".</string>
+    <string name="permission_step3">Kembali ke sini — pemeriksaan berjalan otomatis.</string>
+    <string name="permission_privacy">Semua tetap di perangkat ini: tanpa akun, tanpa unggahan, tanpa analitik.</string>
+    <string name="permission_action">Buka akses semua file</string>
+
+    <!-- Advanced / root -->
+    <string name="advanced_title">Lanjutan — pindai mendalam root</string>
+    <string name="advanced_subtitle">Opsional: juga membaca Android/data dan Android/obb</string>
+    <string name="advanced_root_found">Root terdeteksi. Kedua folder ikut dipindai.</string>
+    <string name="advanced_root_missing">Android menyembunyikan Android/data dan Android/obb dari semua aplikasi, dengan atau tanpa akses semua file. Tanpa root, pemindaian tidak bisa melihatnya, jadi totalnya lebih kecil dari ruang terpakai volume.</string>
+    <string name="advanced_root_prompt_warning">Pemeriksaan root dapat memunculkan permintaan dari pengelola root Anda.</string>
+    <string name="advanced_check_root">Periksa root</string>
+    <string name="expand">Buka</string>
+    <string name="collapse">Tutup</string>
+
+    <!-- Scanning -->
+    <string name="scanning">Memindai…</string>
+    <string name="scan_rate">%1$s file/dtk · %2$s/dtk</string>
+    <string name="scan_eta">~%1$d%% · sekitar %2$s lagi</string>
+    <string name="scan_estimating">Memperkirakan…</string>
+    <string name="cancel">Batal</string>
+    <string name="scan_files_folders">%1$s file · %2$s folder</string>
+    <string name="scan_bytes_elapsed">%1$s dalam %2$s</string>
+
+    <!-- Failed -->
+    <string name="scan_failed_not_found">Folder tidak ditemukan: %1$s</string>
+    <string name="scan_failed_unreadable">Tidak bisa membaca %1$s</string>
+    <string name="scan_failed_not_folder">Bukan folder: %1$s</string>
+    <string name="scan_failed">Pemindaian gagal</string>
+    <string name="retry">Coba lagi</string>
+    <string name="choose_another_volume">Pilih volume lain</string>
+
+    <!-- Result -->
+    <string name="tab_treemap">Treemap</string>
+    <string name="tab_contents">Isi</string>
+    <string name="tab_largest">Terbesar</string>
+    <string name="tab_types">Jenis</string>
+    <string name="tab_find">Cari</string>
+    <string name="home">Beranda</string>
+    <string name="up">Naik</string>
+    <string name="item_count">%1$s · %2$s</string>
+    <plurals name="items_count">
+        <item quantity="other">%1$d item</item>
+    </plurals>
+    <plurals name="files_count">
+        <item quantity="other">%1$d file</item>
+    </plurals>
+    <string name="cancelled_banner">Pemindaian dibatalkan — total ini belum lengkap</string>
+    <string name="footer_counts">%1$s · %2$s folder</string>
+    <string name="empty_folder">Folder kosong</string>
+    <string name="no_itemized_children">Tidak ada isi terperinci (hanya metadata)</string>
+    <string name="no_files">Tidak ada file</string>
+    <string name="search_hint">Cari berdasarkan nama</string>
+    <string name="search_no_results">Tidak ada yang cocok dengan “%1$s”</string>
+    <string name="search_results">%1$s hasil</string>
+    <string name="sort_by">Urutkan</string>
+    <string name="sort_size">Ukuran</string>
+    <string name="sort_name">Nama</string>
+    <string name="sort_date">Tanggal</string>
+    <string name="sort_type">Jenis</string>
+    <string name="types_empty">Tidak ada file untuk dikelompokkan.</string>
+    <plurals name="smaller_items_count">
+        <item quantity="other">%1$d item lebih kecil</item>
+    </plurals>
+    <string name="smaller_items_plain">item lebih kecil</string>
+
+    <!-- Legend -->
+    <string name="cat_video">Video</string>
+    <string name="cat_image">Gambar</string>
+    <string name="cat_audio">Audio</string>
+    <string name="cat_app">Aplikasi</string>
+    <string name="cat_archive">Arsip</string>
+    <string name="cat_document">Dokumen</string>
+    <string name="cat_folder">Folder</string>
+    <string name="cat_other">Lainnya</string>
+
+    <!-- Coverage -->
+    <string name="coverage_read">Terbaca %1$s dari %2$s terpakai (%3$d%%)</string>
+    <string name="coverage_hidden">%1$s tidak terlihat tanpa root</string>
+    <string name="coverage_tap">%1$s · ketuk untuk detail</string>
+    <string name="coverage_title">Apa yang bisa dibaca pemindaian</string>
+    <string name="coverage_scanned">Terpindai</string>
+    <string name="coverage_used">Volume terpakai</string>
+    <string name="coverage_unreachable">Tidak terjangkau</string>
+    <string name="coverage_size">Ukuran volume</string>
+    <string name="coverage_cancelled_value">tidak diketahui (dibatalkan)</string>
+    <string name="coverage_explanation">Android menyembunyikan data privat aplikasi lain, serta Android/data dan Android/obb dari semua aplikasi, dengan atau tanpa akses semua file. Ruang itu benar-benar terpakai tetapi tidak ada aplikasi yang bisa mendaftarnya tanpa root.</string>
+    <string name="coverage_cancelled_explanation">Pemindaian dibatalkan sebelum selesai, jadi selisihnya sebagian besar file yang belum terjangkau. Pindai ulang untuk gambaran lengkap.</string>
+    <string name="coverage_deep_added">Pemindaian root menambahkan %1$s dari Android/data dan Android/obb.</string>
+    <string name="coverage_denied_folders">Folder tak terbaca (%1$d)</string>
+    <plurals name="delete_partial">
+        <item quantity="other">Membebaskan %1$s · %2$d file gagal dihapus</item>
+    </plurals>
+    <plurals name="delete_batch">
+        <item quantity="other">Hapus %1$d item (%2$s)</item>
+    </plurals>
+    <plurals name="selected_count">
+        <item quantity="other">%1$d dipilih · %2$s</item>
+    </plurals>
+    <string name="close">Tutup</string>
+
+    <!-- Details -->
+    <string name="size">Ukuran</string>
+    <string name="size_of_scan">%1$s (%2$s dari pindaian)</string>
+    <string name="items">Item</string>
+    <string name="modified">Diubah</string>
+    <string name="type">Jenis</string>
+    <string name="symlink_not_followed">Tautan simbolik (tidak diikuti)</string>
+    <string name="path">Lokasi</string>
+    <string name="cannot_delete_here">Android tidak mengizinkan aplikasi ini menghapus di sini.</string>
+    <string name="open">Buka</string>
+    <string name="folder">Folder</string>
+    <string name="share">Bagikan</string>
+    <string name="delete">Hapus</string>
+
+    <!-- Delete -->
+    <string name="delete_title">Hapus permanen?</string>
+    <string name="delete_body_file">“%1$s” (%2$s) akan dihapus.</string>
+    <string name="delete_body_folder">“%1$s” (%2$s) akan dihapus, termasuk semua file di dalamnya.</string>
+    <string name="delete_no_undo">Tidak ada tempat sampah dan tidak bisa dibatalkan.</string>
+    <string name="delete_freed">Membebaskan %1$s</string>
+    <string name="delete_already_gone">Sudah tidak ada</string>
+    <string name="delete_failed">Gagal menghapus: %1$s</string>
+    <string name="delete_failed_unknown">Gagal menghapus: kesalahan tidak diketahui</string>
+    <string name="clear_selection">Bersihkan</string>
+</resources>

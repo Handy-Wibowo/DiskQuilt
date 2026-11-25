@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Only the locations DiskQuilt actually opens files from. The previous <root-path path="/"> exposed
+  the whole filesystem to any app that received a content:// URI; the app's own scans are under
+  shared storage, so narrow it to that plus the system roots we can read.
+-->
+<paths>
+    <external-path name="external" path="." />
+    <root-path name="system" path="/system" />
+    <root-path name="vendor" path="/vendor" />
+</paths>

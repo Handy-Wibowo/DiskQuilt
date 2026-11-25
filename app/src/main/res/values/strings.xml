@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DiskQuilt</string>
+
+    <!-- Home -->
+    <string name="home_tagline">Find what is eating your storage. Scan a volume, then drill into the treemap.</string>
+    <string name="volumes">Volumes</string>
+    <string name="volumes_empty_granted">No readable volumes found.</string>
+    <string name="volumes_empty_denied">Grant access to list your volumes.</string>
+    <string name="volume_usage">%1$s used of %2$s · %3$s free</string>
+    <string name="recent_title">Last scan</string>
+    <string name="recent_detail">%1$s · %2$s</string>
+    <string name="recent_open">Scan again</string>
+    <string name="recent_forget">Forget</string>
+    <string name="time_just_now">just now</string>
+    <string name="time_minutes_ago">%1$d min ago</string>
+    <string name="time_hours_ago">%1$d h ago</string>
+    <string name="time_days_ago">%1$d d ago</string>
+    <string name="time_months_ago">%1$d mo ago</string>
+    <string name="about">About</string>
+    <string name="about_title">About DiskQuilt</string>
+    <string name="about_body">DiskQuilt reads your storage on this device only. There is no account, no upload and no analytics.\n\nIt needs “all files access” to enumerate every readable file. Android still hides Android/data, Android/obb and other apps\u2019 private data unless the phone is rooted; the result screen says how much was out of reach.\n\nDeletes are permanent: no trash, no undo.</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="open_failed">Could not open this file</string>
+    <string name="share_failed">Could not share this file</string>
+    <string name="empty_no_matches_body">Try a shorter name, or clear the search.</string>
+    <string name="scan">Scan</string>
+    <string name="scan_specific_folder">Or scan a specific folder</string>
+    <string name="folder_path_hint">/storage/emulated/0/Download</string>
+
+    <!-- Permission explainer -->
+    <string name="permission_title">One permission, three steps</string>
+    <string name="permission_why">Android only lets a storage analyser see every file with \"all files access\". Photo/video access is not enough — the scan would be nearly empty.</string>
+    <string name="permission_step1">Tap the button below to open the system setting.</string>
+    <string name="permission_step2">Turn on \"Allow access to manage all files\".</string>
+    <string name="permission_step3">Come back here — the check runs automatically.</string>
+    <string name="permission_privacy">Everything stays on this device: no account, no upload, no analytics.</string>
+    <string name="permission_action">Open all-files access</string>
+
+    <!-- Advanced / root -->
+    <string name="advanced_title">Advanced — root deep scan</string>
+    <string name="advanced_subtitle">Optional: also reads Android/data and Android/obb</string>
+    <string name="advanced_root_found">Root detected. Both folders join the scan.</string>
+    <string name="advanced_root_missing">Android hides Android/data and Android/obb from every app, with or without all-files access. Without root the scan cannot see them, so its total stays below the volume\'s used space.</string>
+    <string name="advanced_root_prompt_warning">Checking for root may show a prompt from your root manager.</string>
+    <string name="advanced_check_root">Check for root</string>
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
+
+    <!-- Scanning -->
+    <string name="scanning">Scanning…</string>
+    <string name="scan_rate">%1$s files/s · %2$s/s</string>
+    <string name="scan_eta">~%1$d%% · about %2$s left</string>
+    <string name="scan_estimating">Estimating…</string>
+    <string name="cancel">Cancel</string>
+    <string name="scan_files_folders">%1$s files · %2$s folders</string>
+    <string name="scan_bytes_elapsed">%1$s in %2$s</string>
+
+    <!-- Failed -->
+    <string name="scan_failed_not_found">Folder not found: %1$s</string>
+    <string name="scan_failed_unreadable">Cannot read %1$s</string>
+    <string name="scan_failed_not_folder">Not a folder: %1$s</string>
+    <string name="scan_failed">Scan failed</string>
+    <string name="retry">Retry</string>
+    <string name="choose_another_volume">Choose another volume</string>
+
+    <!-- Result -->
+    <string name="tab_treemap">Treemap</string>
+    <string name="tab_contents">Contents</string>
+    <string name="tab_largest">Largest</string>
+    <string name="tab_types">Types</string>
+    <string name="tab_find">Find</string>
+    <string name="home">Home</string>
+    <string name="up">Up</string>
+    <string name="item_count">%1$s · %2$s</string>
+    <plurals name="items_count">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="files_count">
+        <item quantity="one">%1$d file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
+    <string name="cancelled_banner">Scan cancelled — these totals are partial</string>
+    <string name="footer_counts">%1$s · %2$s folders</string>
+    <string name="empty_folder">Empty folder</string>
+    <string name="no_itemized_children">No itemized children (all metadata-only)</string>
+    <string name="no_files">No files</string>
+    <string name="search_hint">Search by name</string>
+    <string name="search_no_results">Nothing matched “%1$s”</string>
+    <string name="search_results">%1$s matches</string>
+    <string name="sort_by">Sort</string>
+    <string name="sort_size">Size</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_date">Date</string>
+    <string name="sort_type">Type</string>
+    <string name="types_empty">No files to group.</string>
+    <plurals name="smaller_items_count">
+        <item quantity="one">%1$d smaller item</item>
+        <item quantity="other">%1$d smaller items</item>
+    </plurals>
+    <string name="smaller_items_plain">smaller items</string>
+
+    <!-- Legend -->
+    <string name="cat_video">Video</string>
+    <string name="cat_image">Image</string>
+    <string name="cat_audio">Audio</string>
+    <string name="cat_app">App</string>
+    <string name="cat_archive">Archive</string>
+    <string name="cat_document">Doc</string>
+    <string name="cat_folder">Folder</string>
+    <string name="cat_other">Other</string>
+
+    <!-- Coverage -->
+    <string name="coverage_read">Read %1$s of %2$s used (%3$d%%)</string>
+    <string name="coverage_hidden">%1$s is invisible to non-root apps</string>
+    <string name="coverage_tap">%1$s · tap for details</string>
+    <string name="coverage_title">What the scan could read</string>
+    <string name="coverage_scanned">Scanned</string>
+    <string name="coverage_used">Volume used</string>
+    <string name="coverage_unreachable">Not reachable</string>
+    <string name="coverage_size">Volume size</string>
+    <string name="coverage_cancelled_value">unknown (scan cancelled)</string>
+    <string name="coverage_explanation">Android hides other apps\' private storage, and Android/data plus Android/obb from every app, with or without all-files access. That space is really used but no app can list it without root.</string>
+    <string name="coverage_cancelled_explanation">The scan was cancelled before it finished, so the difference is mostly files it never reached. Rescan to get a complete picture.</string>
+    <string name="coverage_deep_added">Root pass added %1$s from Android/data and Android/obb.</string>
+    <string name="coverage_denied_folders">Unreadable folders (%1$d)</string>
+    <plurals name="delete_partial">
+        <item quantity="one">Freed %1$s · %2$d file could not be deleted</item>
+        <item quantity="other">Freed %1$s · %2$d files could not be deleted</item>
+    </plurals>
+    <plurals name="delete_batch">
+        <item quantity="one">Delete %1$d item (%2$s)</item>
+        <item quantity="other">Delete %1$d items (%2$s)</item>
+    </plurals>
+    <plurals name="selected_count">
+        <item quantity="one">%1$d selected · %2$s</item>
+        <item quantity="other">%1$d selected · %2$s</item>
+    </plurals>
+    <string name="close">Close</string>
+
+    <!-- Details -->
+    <string name="size">Size</string>
+    <string name="size_of_scan">%1$s (%2$s of scan)</string>
+    <string name="items">Items</string>
+    <string name="modified">Modified</string>
+    <string name="type">Type</string>
+    <string name="symlink_not_followed">Symbolic link (not followed)</string>
+    <string name="path">Path</string>
+    <string name="cannot_delete_here">Android does not allow this app to delete here.</string>
+    <string name="open">Open</string>
+    <string name="folder">Folder</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+
+    <!-- Delete -->
+    <string name="delete_title">Delete permanently?</string>
+    <string name="delete_body_file">“%1$s” (%2$s) will be removed.</string>
+    <string name="delete_body_folder">“%1$s” (%2$s) will be removed, including every file inside it.</string>
+    <string name="delete_no_undo">There is no trash and no undo.</string>
+    <string name="delete_freed">Freed %1$s</string>
+    <string name="delete_already_gone">Already gone</string>
+    <string name="delete_failed">Delete failed: %1$s</string>
+    <string name="delete_failed_unknown">Delete failed: unknown error</string>
+    <string name="clear_selection">Clear</string>
+</resources>
