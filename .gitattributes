@@ -1,0 +1,5 @@
+# Keep shell scripts LF so the hooks work on Windows, macOS and Linux.
+*.sh text eol=lf
+.githooks/* text eol=lf
+gradlew text eol=lf
+*.bat text eol=crlf

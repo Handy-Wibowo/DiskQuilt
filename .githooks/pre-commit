@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Installed via: git config core.hooksPath .githooks
+# Scans only what the commit would add, so the check stays fast.
+exec "$(git rev-parse --show-toplevel)/tools/check-secrets.sh" --staged

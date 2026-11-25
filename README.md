@@ -60,6 +60,26 @@ Lint (0 errors; the remaining warnings are pinned dependency versions and the ad
 gradlew.bat :app:lintDebug
 ```
 
+## Secret check
+
+A pre-commit hook blocks commits that contain credentials or files that must never be published
+(key stores, APKs, `.env`, `local.properties`). Enable it once per clone:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+Run it by hand any time:
+
+```sh
+tools/check-secrets.sh          # staged files
+tools/check-secrets.sh --all    # every tracked file
+```
+
+It looks for provider keys (`kn-`, `sk-`), GitHub tokens (`ghp_`, `github_pat_`), Slack tokens,
+AWS access key ids, private-key headers and long bearer tokens, and redacts matches in its output
+so the terminal log is safe to share. `--no-verify` bypasses it for a single commit.
+
 ## Reviews
 
 `docs/REVIEW.md` is a consolidated review produced by eight agents on eight different models, each
