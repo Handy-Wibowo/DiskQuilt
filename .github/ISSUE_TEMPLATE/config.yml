@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Handy-Wibowo/DiskQuilt/security/advisories/new
+    about: Report privately. Do not open a public issue for a vulnerability.
+  - name: Questions and ideas
+    url: https://github.com/Handy-Wibowo/DiskQuilt/discussions
+    about: For open-ended questions that are not a bug or a concrete feature request.

@@ -1,0 +1,79 @@
+name: Bug report
+description: Something in DiskQuilt is broken or shows wrong numbers
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please give enough detail that the scan can be reproduced.
+        Do **not** attach screenshots or logs that show private file names you have not redacted.
+
+  - type: input
+    id: version
+    attributes:
+      label: DiskQuilt version
+      description: The version shown in Settings, or the commit hash if you built it yourself.
+      placeholder: "1.0 (commit 153416c)"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: "TECNO POVA 6, Android 14 (API 34)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: access
+    attributes:
+      label: Was All files access granted?
+      options:
+        - "Yes — Settings shows the access granted"
+        - "No — I only scanned the app folder"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: What did you scan?
+      description: Volume (internal / SD card) or a specific folder, and roughly how many files.
+      placeholder: "Internal storage, ~40k files"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Exact error text is more useful than a paraphrase. For wrong sizes, say which screen disagrees with which.
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots (redacted), whether it reproduces after a rescan, root enabled or not.

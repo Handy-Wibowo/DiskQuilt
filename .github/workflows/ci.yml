@@ -56,8 +56,10 @@ jobs:
       - name: Lint
         run: sh gradlew --no-daemon :app:lintDebug
 
-      - name: Assemble debug APK
-        run: sh gradlew --no-daemon :app:assembleDebug
+      - name: Assemble debug APK and unsigned AAB
+        # bundleRelease is the Play upload path; building it here catches AAB-only regressions.
+        # It is unsigned because CI has no keystore; release.yml signs and publishes it on a tag.
+        run: sh gradlew --no-daemon :app:assembleDebug :app:bundleRelease
 
       - name: Upload reports
         if: always()

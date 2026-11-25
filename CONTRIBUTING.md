@@ -29,8 +29,9 @@ Use your real name and a reachable email. A pull request with unsigned commits c
 
 ## Build and test
 
-Requirements: JDK 17+ and Android SDK 35 (platform + build-tools). Copy your SDK path into
-`local.properties` (`sdk.dir=...`); it is gitignored.
+Requirements: **JDK 17–21** and Android SDK 35 (platform + build-tools). Copy your SDK path into
+`local.properties` (`sdk.dir=...`); it is gitignored. Gradle 8.11.1 will not start on Java 25, so
+set `JAVA_HOME` to a 21 JDK if that is your default.
 
 ```sh
 gradlew.bat :app:assembleDebug          # or ./gradlew on macOS/Linux

@@ -44,8 +44,11 @@ list.
 
 ## Build
 
-Requirements: JDK 17+ and Android SDK 35 (platform + build-tools). `local.properties` must point at
-your SDK (`sdk.dir=...`); it is gitignored on purpose.
+Requirements: **JDK 17–21** and Android SDK 35 (platform + build-tools). `local.properties` must
+point at your SDK (`sdk.dir=...`); it is gitignored on purpose.
+
+The wrapper is Gradle 8.11.1, which refuses to start on Java 25 (it fails with just the version
+number). If `java -version` shows 25, point `JAVA_HOME` at a 21 JDK before building. CI uses 21.
 
 ```bat
 gradlew.bat :app:assembleDebug
@@ -97,17 +100,50 @@ lint, debug assemble, then uploads the reports and the APK as artifacts. The wra
 
 ### Release builds
 
-Release signing reads `keystore.properties`, which is gitignored; without it the release APK is
-built unsigned rather than failing, so a fresh clone can still assemble.
+Release signing reads `keystore.properties`, which is gitignored; without it the release build is
+produced unsigned rather than failing, so a fresh clone can still assemble.
+
+Generate the key once, on your own machine, and keep it out of the repository:
 
 ```sh
-cp keystore.properties.example keystore.properties   # then fill in the passwords
 keytool -genkeypair -v -keystore diskquilt-release.jks -alias diskquilt \
         -keyalg RSA -keysize 4096 -validity 10000
-gradlew.bat :app:assembleRelease
+cp keystore.properties.example keystore.properties   # then fill in the passwords
 ```
 
-Lose the keystore and you cannot ship an update to the same listing — back it up somewhere safe.
+Then build either artifact — both use the same key:
+
+```sh
+gradlew.bat :app:assembleRelease    # app/build/outputs/apk/release/app-release.apk
+gradlew.bat :app:bundleRelease      # app/build/outputs/bundle/release/app-release.aab
+```
+
+The `.aab` is what Google Play accepts; the `.apk` is for sideloading. Lose the keystore and you
+cannot ship an update to the same listing — back it up somewhere safe.
+
+### Releasing
+
+`.github/workflows/release.yml` publishes a signed APK and AAB when you push a version tag:
+
+```sh
+git tag v1.0
+git push origin v1.0
+```
+
+It stops before building if the tag does not match `versionName` in `app/build.gradle.kts`, so bump
+the version first. Four repository secrets are required (Settings → Secrets and variables → Actions):
+
+| Secret | Value |
+|---|---|
+| `KEYSTORE_BASE64` | `base64 -w0 diskquilt-release.jks` |
+| `KEYSTORE_PASSWORD` | the keystore store password |
+| `KEY_ALIAS` | `diskquilt` |
+| `KEY_PASSWORD` | the key password |
+
+The workflow runs the unit tests and lint, builds both artifacts, verifies each signature with
+`apksigner` and `keytool`, then creates the GitHub release with the APK, the AAB and
+`SHA256SUMS.txt`. The keystore exists only for the duration of that job and is deleted afterwards,
+including on failure.
 
 ## Reviews
 
