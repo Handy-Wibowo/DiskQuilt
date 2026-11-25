@@ -66,7 +66,7 @@ A pre-commit hook blocks commits that contain credentials or files that must nev
 (key stores, APKs, `.env`, `local.properties`). Enable it once per clone:
 
 ```sh
-git config core.hooksPath .githooks
+tools/install-hooks.sh
 ```
 
 Run it by hand any time:
