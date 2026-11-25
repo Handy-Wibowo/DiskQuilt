@@ -1,5 +1,6 @@
 # DiskQuilt
 
+[![CI](https://github.com/Handy-Wibowo/DiskQuilt/actions/workflows/ci.yml/badge.svg)](https://github.com/Handy-Wibowo/DiskQuilt/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android%208.0%2B%20(API%2026)-green.svg)](#requirements)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.21-purple.svg)](https://kotlinlang.org)
@@ -87,6 +88,12 @@ tools/check-secrets.sh --all    # every tracked file
 It looks for provider keys (`kn-`, `sk-`), GitHub tokens (`ghp_`, `github_pat_`), Slack tokens,
 AWS access key ids, private-key headers and long bearer tokens, and redacts matches in its output
 so the terminal log is safe to share. `--no-verify` bypasses it for a single commit.
+
+### Continuous integration
+
+`.github/workflows/ci.yml` runs on every push and pull request to `main`: secret check, unit tests,
+lint, debug assemble, then uploads the reports and the APK as artifacts. The wrapper is invoked as
+`sh gradlew` because the executable bit is not portable across clones.
 
 ### Release builds
 
