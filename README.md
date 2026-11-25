@@ -192,6 +192,14 @@ Ways in, and what was measured:
 - No duplicate detection, export, scheduled scans or per-app attribution.
 - Deep scan needs root and has only been exercised against the parser, not a rooted device.
 
+## Contributing
+
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first: commits need a
+DCO sign-off (`git commit -s`), `main` requires a green CI check, and new strings must be added in
+both English and Indonesian. This project follows the
+[Contributor Covenant](CODE_OF_CONDUCT.md); report vulnerabilities privately as described in
+[SECURITY.md](SECURITY.md).
+
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE). Copyright 2026 Handy Wibowo.
