@@ -1,5 +1,13 @@
 # DiskQuilt
 
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android%208.0%2B%20(API%2026)-green.svg)](#requirements)
+[![Kotlin](https://img.shields.io/badge/kotlin-2.0.21-purple.svg)](https://kotlinlang.org)
+[![Tests](https://img.shields.io/badge/tests-54%20passing-brightgreen.svg)](#build)
+[![Lint](https://img.shields.io/badge/lint-0%20errors-brightgreen.svg)](#build)
+
+![DiskQuilt treemap](docs/images/treemap.jpg)
+
 Android disk-usage analyzer in the spirit of WinDirStat / WizTree: scan a volume or folder, then
 explore it as a squarified treemap, a size-sorted folder list, a type breakdown, and a largest-files
 list.
@@ -79,6 +87,20 @@ tools/check-secrets.sh --all    # every tracked file
 It looks for provider keys (`kn-`, `sk-`), GitHub tokens (`ghp_`, `github_pat_`), Slack tokens,
 AWS access key ids, private-key headers and long bearer tokens, and redacts matches in its output
 so the terminal log is safe to share. `--no-verify` bypasses it for a single commit.
+
+### Release builds
+
+Release signing reads `keystore.properties`, which is gitignored; without it the release APK is
+built unsigned rather than failing, so a fresh clone can still assemble.
+
+```sh
+cp keystore.properties.example keystore.properties   # then fill in the passwords
+keytool -genkeypair -v -keystore diskquilt-release.jks -alias diskquilt \
+        -keyalg RSA -keysize 4096 -validity 10000
+gradlew.bat :app:assembleRelease
+```
+
+Lose the keystore and you cannot ship an update to the same listing — back it up somewhere safe.
 
 ## Reviews
 

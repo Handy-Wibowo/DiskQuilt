@@ -15,3 +15,8 @@ __pycache__/
 
 .env
 env.bat
+
+# Release signing material never enters the repository
+keystore.properties
+*.jks
+*.keystore

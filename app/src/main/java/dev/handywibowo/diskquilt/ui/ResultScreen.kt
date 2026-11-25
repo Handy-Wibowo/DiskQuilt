@@ -29,8 +29,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -70,6 +70,7 @@ private const val TAB_LARGEST = 2
 private const val TAB_TYPES = 3
 private const val TAB_FIND = 4
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun ResultScreen(
     vm: ScanViewModel,
@@ -184,15 +185,33 @@ fun ResultScreen(
             )
         }
 
-        TabRow(
+        // Scrollable: five labels do not fit 1080 px, and a fixed row wraps them mid-word.
+        PrimaryScrollableTabRow(
             selectedTabIndex = tab,
             containerColor = MaterialTheme.colorScheme.surface,
+            edgePadding = 8.dp,
         ) {
-            Tab(selected = tab == TAB_TREEMAP, onClick = { tab = TAB_TREEMAP }, text = { Text(stringResource(R.string.tab_treemap)) })
-            Tab(selected = tab == TAB_CONTENTS, onClick = { tab = TAB_CONTENTS }, text = { Text(stringResource(R.string.tab_contents)) })
-            Tab(selected = tab == TAB_LARGEST, onClick = { tab = TAB_LARGEST }, text = { Text(stringResource(R.string.tab_largest)) })
-            Tab(selected = tab == TAB_TYPES, onClick = { tab = TAB_TYPES }, text = { Text(stringResource(R.string.tab_types)) })
-            Tab(selected = tab == TAB_FIND, onClick = { tab = TAB_FIND }, text = { Text(stringResource(R.string.tab_find)) })
+            val labels = listOf(
+                R.string.tab_treemap,
+                R.string.tab_contents,
+                R.string.tab_largest,
+                R.string.tab_types,
+                R.string.tab_find,
+            )
+            labels.forEachIndexed { index, label ->
+                Tab(
+                    selected = tab == index,
+                    onClick = { tab = index },
+                    text = {
+                        Text(
+                            stringResource(label),
+                            maxLines = 1,
+                            softWrap = false,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                )
+            }
         }
         Spacer(Modifier.height(6.dp))
 
