@@ -72,6 +72,14 @@ Lint (0 errors; the remaining warnings are pinned dependency versions and the ad
 gradlew.bat :app:lintDebug
 ```
 
+### Troubleshooting
+
+**A release build hangs in `lintVitalAnalyzeRelease` at 0 % CPU.** Gradle 8.11.1's file-system
+watcher deadlocks during lint analysis when the project path contains a space on Windows. This is
+why `gradle.properties` sets `org.gradle.vfs.watch=false`; removing that line brings the hang back
+for such paths. Watching only affects incremental detection — builds are still correct without it.
+CI is unaffected (Linux runner, no space in the path).
+
 ## Secret check
 
 A pre-commit hook blocks commits that contain credentials or files that must never be published
