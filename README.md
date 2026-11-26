@@ -238,9 +238,10 @@ Ways in, and what was measured:
 
 ## Roadmap
 
-`docs/PLAN-NEXT.md` is the forward plan for v1.1–v1.4: quick presets, duplicate finder, CSV report
-export, treemap zoom/pan, scan history with trend, and a per-package view. Each phase carries files,
-acceptance criteria, tests and risks. `docs/PLAN.md` records the completed remediation work.
+`docs/PLAN-NEXT.md` is the forward plan for v1.1–v1.5: quick presets, duplicate finder, CSV report
+export, treemap zoom/pan, scan history with trend, a per-package view, and an in-app language picker
+with six more translations. Each phase carries files, acceptance criteria, tests and risks.
+`docs/PLAN.md` records the completed remediation work.
 
 ## Contributing
 

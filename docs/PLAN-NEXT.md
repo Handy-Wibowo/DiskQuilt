@@ -15,7 +15,8 @@ Unchanged from `docs/PLAN.md`:
 - `minSdk 26`, `targetSdk 35`. Storage model (`MANAGE_EXTERNAL_STORAGE`, optional root) does not
   change.
 - Core logic is plain Kotlin and JVM-testable; framework code stays in the UI/IO edge.
-- Every new user-visible string goes into **both** `values/strings.xml` and `values-in/strings.xml`.
+- Every new user-visible string goes into **every** shipped `values*/strings.xml`; `LocaleParityTest`
+  (Phase 16) enforces it instead of review.
 - No new permission. If a feature cannot work within the existing grant, it says so on screen
   instead of asking for more.
 
@@ -27,6 +28,7 @@ Baselines from the current build, to keep the new work honest:
 | PSS after a full scan | 158 MB |
 | Treemap cells per layout | capped at 3 000 |
 | Unit tests | 54, all JVM |
+| Strings | 119 keys x 2 locales (en, in) |
 
 ## Ordering and releases
 
@@ -37,6 +39,8 @@ flowchart LR
   P11 --> P12[12 zoom]
   P12 --> P13[13 history]
   P13 --> P14[14 packages]
+  P14 --> P15[15 language picker]
+  P15 --> P16[16 translations]
 ```
 
 | Cut | Phases | Theme |
@@ -45,6 +49,9 @@ flowchart LR
 | v1.2 | 10 | The differentiator: reclaim space |
 | v1.3 | 12, 13 | Comfort and trend |
 | v1.4 | 14 | "Who owns my storage" |
+| v1.5 | 15, 16 | Speak the user's language |
+
+Phases 15–16 depend on nothing in 9–14 and can be pulled into any earlier cut.
 
 Each phase is one commit-sized change set and ends with:
 
@@ -153,12 +160,69 @@ will show partial numbers. That is a platform limit, not a bug; the UI must say 
 
 ---
 
+## Phase 15 — In-app language picker (M) · v1.5
+
+**Current state: there is no language option.** The app follows the system locale and ships
+`values/` (English) and `values-in/` (Indonesian), 119 strings each. `ui/Format.kt` formats numbers
+and dates with `Locale.getDefault()`, and the manifest has no `localeConfig`, so Android 13's
+per-app language screen shows nothing.
+
+The picker must work back to API 26, so it does not rely on `LocaleManager` (API 33) and does not
+add AppCompat just for `setApplicationLocales`. One dependency-free override point keeps the
+behaviour identical on every version:
+
+| ID | Task | Files | Acceptance |
+|---|---|---|---|
+| 15.1 | `LanguageStore`: persist one tag from `system,en,in,es,pt,fr,de,hi,ru`; unset or unknown tag reads as `system`; own `SharedPreferences` file so it survives "clear recent scans" | new `data/LanguageStore.kt` | JVM test: default, round-trip, unknown → system |
+| 15.2 | `AppLocale.apply(base, tag)`: return `base.createConfigurationContext(config with locale)` and set `Locale.setDefault`; `system` returns `base` untouched | new `ui/AppLocale.kt` | JVM test asserts configuration locale and default locale for `es` and `system` |
+| 15.3 | `MainActivity.attachBaseContext` applies the stored tag before Compose inflates; `Format.kt` keeps `Locale.getDefault()`, so decimal comma and translated dates need no call-site changes | `MainActivity.kt` | On `es`, `1.5 GB` renders `1,5 GB` |
+| 15.4 | About dialog gains a **Language** row: radio list with "System default" plus each language **in its own name** (`English`, `Bahasa Indonesia`, `Español`, `Português`, `Français`, `Deutsch`, `हिन्दी`, `Русский`); selecting persists and calls `recreate()` | `ui/HomeScreen.kt`, strings (en + in) | Selecting Español re-renders Home in Spanish without killing the app |
+| 15.5 | `res/xml/locales_config.xml` + `android:localeConfig`; on API 33+ mirror an explicit choice into `LocaleManager.setApplicationLocales`, and clear it for `system` | `AndroidManifest.xml`, new `res/xml/locales_config.xml`, `MainActivity.kt` | Settings → Apps → DiskQuilt → Language lists the same nine entries (system + eight languages) |
+| 15.6 | Precedence documented: an explicit in-app choice wins; `system` defers to the OS per-app locale, then the device locale | `README.md`, `docs/TRANSLATIONS.md` | No way to end up with two contradicting selections |
+
+Tests: `LanguageStoreTest` (valid/invalid tags, persistence), `AppLocaleTest` (config + default
+locale, `system` is a no-op). Device check: pick each language, force-stop, relaunch, confirm it
+stuck; start a scan, change language mid-scan, confirm progress and results survive the recreate
+(the scan lives in the ViewModel).
+
+Risks: `Locale.setDefault` is process-global — set it in `attachBaseContext` and again after a
+change, never per-composable. Android 13's system picker and the in-app picker can disagree unless
+15.5 mirrors the value; if mirroring fails on a vendor ROM, the in-app choice still governs.
+
+## Phase 16 — Additional languages (M) · v1.5
+
+Six new locales at 119 strings each. Translations are drafted here but **not** claimed as reviewed
+until a native speaker signs off; that distinction is recorded in the repo.
+
+| ID | Task | Files | Acceptance |
+|---|---|---|---|
+| 16.1 | Add `values-es/`, `values-pt/`, `values-fr/`, `values-de/`, `values-hi/`, `values-ru/` with every key, preserving plurals (`plurals` quantities and `one`/`other` forms) | `app/src/main/res/values-*/strings.xml` | Parity test green |
+| 16.2 | `LocaleParityTest` (JVM): parse every `values*/strings.xml`; assert identical key sets, no blank values, identical plural quantities; fail with the missing keys listed | new `app/src/test/.../LocaleParityTest.kt` | Removing one string from one locale fails the build |
+| 16.3 | `docs/TRANSLATIONS.md`: table of locale, translator, status (`draft` / `reviewed`), date, known issues | new `docs/TRANSLATIONS.md` | Status is honest; no `reviewed` without a name |
+| 16.4 | Screenshot Home and Result in each language at 1.3× font scale; fix clipped tabs, chips and buttons | `docs/images/`, UI if needed | Five-tab row and sort chips fit in `de`, `hi`, `ru` |
+| 16.5 | Keep `pt` as Brazilian Portuguese; a `values-pt-rPT` file is a later, separate task | `values-pt/` | `pt-PT` devices fall back to `pt` without crashes |
+
+Notes:
+
+- `hi` and `ru` produce the longest strings; the tab row (`Treemap / Contents / Largest / Types /
+  Find`) and the sort chips are the first places text clips. Shorten the translation rather than the
+  layout, and keep the English key semantics.
+- Plural forms differ: Russian needs `one/few/many/other`; Hindi and Indonesian need
+  `one/other`. The parity test must compare *quantities*, not just keys, or a Russian build can crash
+  at runtime on a missing `few` form.
+- Arabic and Hebrew are deliberately **not** in this phase: `supportsRtl` is already true, but no RTL
+  layout pass has been done and shipping a flipped UI untested is worse than English.
+
+---
+
 ## Documentation debt closed by this plan
 
 | Item | Fix |
 |---|---|
 | `docs/PLAN.md` Phase 4 status claims "done and verified" | Amended to name 4.5 as missing and point here |
 | README has no forward-looking section | `## Roadmap` links this file |
+| No record of translation quality | `docs/TRANSLATIONS.md` (Phase 16.3) separates draft from reviewed |
+| Android 13 per-app language screen is empty | `localeConfig` added in Phase 15.5 |
 
 ## Out of scope
 
@@ -168,3 +232,5 @@ will show partial numbers. That is a platform limit, not a bug; the UI must say 
   tests.
 - Migrating off Gradle 8.11.1 / AGP 8.7.2. Tracked separately because it changes the dependency
   matrix, not the product.
+- Arabic and Hebrew, until a real RTL layout pass exists (see Phase 16 notes).
+- Automated translation services in the build: translations stay files, reviewed by people.
