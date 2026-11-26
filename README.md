@@ -240,8 +240,9 @@ Ways in, and what was measured:
 
 `docs/PLAN-NEXT.md` is the forward plan for v1.1–v1.5: quick presets, duplicate finder, CSV report
 export, treemap zoom/pan, scan history with trend, a per-package view, and an in-app language picker
-with six more translations. Each phase carries files, acceptance criteria, tests and risks.
-`docs/PLAN.md` records the completed remediation work.
+with ten more translations (Spanish, Portuguese, French, German, Hindi, Russian, Simplified and
+Traditional Chinese, Korean, Japanese). Each phase carries files, acceptance criteria, tests and
+risks. `docs/PLAN.md` records the completed remediation work.
 
 ## Contributing
 

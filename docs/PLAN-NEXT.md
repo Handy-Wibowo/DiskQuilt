@@ -60,7 +60,7 @@ Each phase is one commit-sized change set and ends with:
 3. Debug APK installed on the TECNO LI7; the phase's user-visible change proven by a screenshot.
 4. `:app:assembleRelease :app:bundleRelease` still build (CI proves this on every push).
 
-Sizes: **S** ≤ half a day, **M** 1–2 days for one developer, tests included.
+Sizes: **S** ≤ half a day, **M** 1–2 days, **L** 3+ days (translation volume), tests included.
 
 ---
 
@@ -173,11 +173,11 @@ behaviour identical on every version:
 
 | ID | Task | Files | Acceptance |
 |---|---|---|---|
-| 15.1 | `LanguageStore`: persist one tag from `system,en,in,es,pt,fr,de,hi,ru`; unset or unknown tag reads as `system`; own `SharedPreferences` file so it survives "clear recent scans" | new `data/LanguageStore.kt` | JVM test: default, round-trip, unknown → system |
+| 15.1 | `LanguageStore`: persist one tag from `system,en,in,es,pt,fr,de,hi,ru,zh-Hans,zh-Hant,ko,ja`; unset or unknown tag reads as `system`; own `SharedPreferences` file so it survives "clear recent scans" | new `data/LanguageStore.kt` | JVM test: default, round-trip, unknown → system |
 | 15.2 | `AppLocale.apply(base, tag)`: return `base.createConfigurationContext(config with locale)` and set `Locale.setDefault`; `system` returns `base` untouched | new `ui/AppLocale.kt` | JVM test asserts configuration locale and default locale for `es` and `system` |
 | 15.3 | `MainActivity.attachBaseContext` applies the stored tag before Compose inflates; `Format.kt` keeps `Locale.getDefault()`, so decimal comma and translated dates need no call-site changes | `MainActivity.kt` | On `es`, `1.5 GB` renders `1,5 GB` |
-| 15.4 | About dialog gains a **Language** row: radio list with "System default" plus each language **in its own name** (`English`, `Bahasa Indonesia`, `Español`, `Português`, `Français`, `Deutsch`, `हिन्दी`, `Русский`); selecting persists and calls `recreate()` | `ui/HomeScreen.kt`, strings (en + in) | Selecting Español re-renders Home in Spanish without killing the app |
-| 15.5 | `res/xml/locales_config.xml` + `android:localeConfig`; on API 33+ mirror an explicit choice into `LocaleManager.setApplicationLocales`, and clear it for `system` | `AndroidManifest.xml`, new `res/xml/locales_config.xml`, `MainActivity.kt` | Settings → Apps → DiskQuilt → Language lists the same nine entries (system + eight languages) |
+| 15.4 | About dialog gains a **Language** row: radio list with "System default" plus each language **in its own name** (`English`, `Bahasa Indonesia`, `Español`, `Português`, `Français`, `Deutsch`, `हिन्दी`, `Русский`, `简体中文`, `繁體中文`, `한국어`, `日本語`); selecting persists and calls `recreate()` | `ui/HomeScreen.kt`, strings (en + in) | Selecting Español re-renders Home in Spanish without killing the app |
+| 15.5 | `res/xml/locales_config.xml` + `android:localeConfig`; on API 33+ mirror an explicit choice into `LocaleManager.setApplicationLocales`, and clear it for `system` | `AndroidManifest.xml`, new `res/xml/locales_config.xml`, `MainActivity.kt` | Settings → Apps → DiskQuilt → Language lists the same thirteen entries (system + twelve languages) |
 | 15.6 | Precedence documented: an explicit in-app choice wins; `system` defers to the OS per-app locale, then the device locale | `README.md`, `docs/TRANSLATIONS.md` | No way to end up with two contradicting selections |
 
 Tests: `LanguageStoreTest` (valid/invalid tags, persistence), `AppLocaleTest` (config + default
@@ -189,17 +189,17 @@ Risks: `Locale.setDefault` is process-global — set it in `attachBaseContext` a
 change, never per-composable. Android 13's system picker and the in-app picker can disagree unless
 15.5 mirrors the value; if mirroring fails on a vendor ROM, the in-app choice still governs.
 
-## Phase 16 — Additional languages (M) · v1.5
+## Phase 16 — Additional languages (L) · v1.5
 
-Six new locales at 119 strings each. Translations are drafted here but **not** claimed as reviewed
+Ten new locales at 119 strings each. Translations are drafted here but **not** claimed as reviewed
 until a native speaker signs off; that distinction is recorded in the repo.
 
 | ID | Task | Files | Acceptance |
 |---|---|---|---|
-| 16.1 | Add `values-es/`, `values-pt/`, `values-fr/`, `values-de/`, `values-hi/`, `values-ru/` with every key, preserving plurals (`plurals` quantities and `one`/`other` forms) | `app/src/main/res/values-*/strings.xml` | Parity test green |
-| 16.2 | `LocaleParityTest` (JVM): parse every `values*/strings.xml`; assert identical key sets, no blank values, identical plural quantities; fail with the missing keys listed | new `app/src/test/.../LocaleParityTest.kt` | Removing one string from one locale fails the build |
+| 16.1 | Add `values-es/`, `values-pt/`, `values-fr/`, `values-de/`, `values-hi/`, `values-ru/`, `values-b+zh+Hans/`, `values-b+zh+Hant/`, `values-ko/`, `values-ja/` with every key. Chinese uses script qualifiers (`b+zh+Hans`, `b+zh+Hant`, API 21+) rather than `zh-rCN`/`zh-rTW`, so Hong Kong, Macau and Taiwan devices resolve to Traditional; "modern Chinese" is the Simplified set | `app/src/main/res/values-*/strings.xml` | Parity test green; a `zh-Hant` device never shows Simplified glyphs |
+| 16.2 | `LocaleParityTest` (JVM): parse every `values*/strings.xml`; assert identical key sets, no blank values, and each locale's CLDR plural *minimum* (`ru`: one/few/many/other; `en`/`in`/`hi`: one/other; `zh`/`ja`/`ko`: other only); fail listing the missing keys or quantities | new `app/src/test/.../LocaleParityTest.kt` | Removing one string or the Russian `few` form fails the build |
 | 16.3 | `docs/TRANSLATIONS.md`: table of locale, translator, status (`draft` / `reviewed`), date, known issues | new `docs/TRANSLATIONS.md` | Status is honest; no `reviewed` without a name |
-| 16.4 | Screenshot Home and Result in each language at 1.3× font scale; fix clipped tabs, chips and buttons | `docs/images/`, UI if needed | Five-tab row and sort chips fit in `de`, `hi`, `ru` |
+| 16.4 | Screenshot Home and Result in each language at 1.3× font scale; fix clipped tabs, chips and buttons | `docs/images/`, UI if needed | Five-tab row and sort chips fit in `de`, `hi`, `ru`; full-width CJK punctuation does not wrap mid-token in `ja`, `ko`, `zh-Hant` |
 | 16.5 | Keep `pt` as Brazilian Portuguese; a `values-pt-rPT` file is a later, separate task | `values-pt/` | `pt-PT` devices fall back to `pt` without crashes |
 
 Notes:
@@ -207,11 +207,17 @@ Notes:
 - `hi` and `ru` produce the longest strings; the tab row (`Treemap / Contents / Largest / Types /
   Find`) and the sort chips are the first places text clips. Shorten the translation rather than the
   layout, and keep the English key semantics.
-- Plural forms differ: Russian needs `one/few/many/other`; Hindi and Indonesian need
-  `one/other`. The parity test must compare *quantities*, not just keys, or a Russian build can crash
-  at runtime on a missing `few` form.
+- Plural forms are per language, not per key: Russian needs `one/few/many/other`,
+  English/Indonesian/Hindi `one/other`, and Chinese/Japanese/Korean only `other`. The parity test
+  enforces each locale's minimum set; requiring identical quantities everywhere would add
+  meaningless forms and still miss a Russian `few`.
+- CJK needs its own review pass: no spaces between words, full-width punctuation (`，。；`), taller
+  line boxes, and no `one` plural. Traditional Chinese characters are wider than Simplified at the
+  same font size, so check the tab row and sort chips in `zh-Hant` before the Latin languages.
 - Arabic and Hebrew are deliberately **not** in this phase: `supportsRtl` is already true, but no RTL
   layout pass has been done and shipping a flipped UI untested is worse than English.
+- Korean and Japanese borrow many Latin technical terms; keep `Android/data`, `su`, `APK` and unit
+  suffixes untranslated rather than inventing local forms.
 
 ---
 
