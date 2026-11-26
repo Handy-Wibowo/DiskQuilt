@@ -236,6 +236,12 @@ Ways in, and what was measured:
 - No duplicate detection, export, scheduled scans or per-app attribution.
 - Deep scan needs root and has only been exercised against the parser, not a rooted device.
 
+## Roadmap
+
+`docs/PLAN-NEXT.md` is the forward plan for v1.1–v1.4: quick presets, duplicate finder, CSV report
+export, treemap zoom/pan, scan history with trend, and a per-package view. Each phase carries files,
+acceptance criteria, tests and risks. `docs/PLAN.md` records the completed remediation work.
+
 ## Contributing
 
 Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first: commits need a

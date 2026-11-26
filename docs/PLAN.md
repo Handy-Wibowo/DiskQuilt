@@ -92,7 +92,8 @@ counts, sizes, and that a cancelled scan stops early.
 
 ## Phase 4 — Features (P1 13)
 
-> **Status: done and verified on the LI7.**
+> **Status: 4.1–4.4 done and verified on the LI7. 4.5 (quick presets) was never implemented —
+> no preset code exists in the app. It is now Phase 9 of `docs/PLAN-NEXT.md`.**
 
 | ID | Task | Files | Acceptance |
 |---|---|---|---|
